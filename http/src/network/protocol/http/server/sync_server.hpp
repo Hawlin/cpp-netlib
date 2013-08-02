@@ -9,9 +9,9 @@
 #define NETWORK_PROTOCOL_HTTP_SERVER_SYNC_SERVER_HPP_20101025
 
 #include <network/detail/debug.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <functional>
-#include <asio/ip/tcp.hpp>
+#include <asio/ip/tcp.hpp> 
 #include <network/protocol/http/response.hpp>
 #include <network/protocol/http/request.hpp>
 #include <network/protocol/http/server/sync_connection.hpp>
@@ -19,7 +19,7 @@
 #include <network/protocol/http/server/storage_base.hpp>
 #include <network/protocol/http/server/socket_options_base.hpp>
 #include <network/traits/string.hpp>
-#include <boost/thread/mutex.hpp>
+#include <mutex>
 
 namespace network {
 namespace http {
@@ -65,7 +65,7 @@ struct sync_server_base : server_storage_base, socket_options_base {
   }
 
   void listen() {
-    boost::unique_lock<boost::mutex> listening_lock(listening_mutex_);
+    std::unique_lock<boost::mutex> listening_lock(listening_mutex_);
     if (!listening_)
       start_listening();
   }
@@ -75,8 +75,8 @@ struct sync_server_base : server_storage_base, socket_options_base {
   Handler& handler_;
   string_type address_, port_;
   asio::ip::tcp::acceptor acceptor_;
-  boost::shared_ptr<sync_connection<Tag, Handler>> new_connection;
-  boost::mutex listening_mutex_;
+  std::shared_ptr<sync_connection<Tag, Handler>> new_connection;
+  std::mutex listening_mutex_;
   bool listening_;
 
   void handle_accept(asio::error_code const& ec) {
