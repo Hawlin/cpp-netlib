@@ -9,7 +9,7 @@
 
 #include <network/detail/debug.hpp>
 #include <network/protocol/http/server/async_connection.hpp>
-#include <boost/thread/mutex.hpp>
+#include <mutex>
 #include <network/protocol/http/server/storage_base.hpp>
 #include <network/protocol/http/server/socket_options_base.hpp>
 #include <network/utils/thread_pool.hpp>
@@ -90,8 +90,8 @@ struct async_server_base : server_storage_base, socket_options_base {
   asio::ip::tcp::acceptor acceptor;
   bool stopping;
   connection_ptr new_connection;
-  boost::mutex listening_mutex_;
-  boost::mutex stopping_mutex_;
+  std::mutex listening_mutex_;
+  std::mutex stopping_mutex_;
   bool listening;
 
   void handle_stop() {
