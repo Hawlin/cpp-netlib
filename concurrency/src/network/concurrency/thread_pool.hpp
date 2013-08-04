@@ -1,6 +1,7 @@
 // Copyright 2010 Dean Michael Berris.
 // Copyright 2012 Google, Inc.
 // Copyright (c) Glyn Matthews 2012.
+// Copyright 2013 Linunix.
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -18,9 +19,9 @@
 namespace network {
 namespace concurrency {
 
-typedef std::shared_ptr<boost::asio::io_service> io_service_ptr;
-typedef std::shared_ptr<std::vector<std::thread>> worker_threads_ptr;
-typedef std::shared_ptr<boost::asio::io_service::work> sentinel_ptr;
+using io_service_ptr = std::shared_ptr<boost::asio::io_service>;
+using worker_threads_ptr = std::shared_ptr<std::vector<std::thread>>;
+using sentinel_pt = std::shared_ptr<boost::asio::io_service::work>;
 
 struct thread_pool_pimpl;
 
